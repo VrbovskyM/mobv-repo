@@ -1,0 +1,59 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@+id/IntroFragment">
+
+    <fragment
+        android:id="@+id/IntroFragment"
+        android:name="com.example.mobv.IntroFragment">
+        <action
+            android:id="@+id/toLogin"
+            app:destination="@id/LoginFragment" />
+        <action
+            android:id="@+id/toRegister"
+            app:destination="@id/RegFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/LoginFragment"
+        android:name="com.example.mobv.LoginFragment">
+        <action
+            android:id="@+id/action_LoginFragment_to_ProfileFragment"
+            app:destination="@id/ProfileFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/RegFragment"
+        android:name="com.example.mobv.RegFragment">
+        <action
+            android:id="@+id/action_RegFragment_to_ProfileFragment"
+            app:destination="@id/ProfileFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/ProfileFragment"
+        android:name="com.example.mobv.ProfileFragment" >
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/MapFragment"
+        android:name="com.example.mobv.MapFragment">
+    </fragment>
+    <fragment
+        android:id="@+id/FeedFragment"
+        android:name="com.example.mobv.FeedFragment" >
+
+    </fragment>
+
+    <action
+        android:id="@+id/action_btn_to_feed"
+        app:destination="@id/FeedFragment" />
+    <action
+        android:id="@+id/action_btn_to_profile"
+        app:destination="@id/ProfileFragment" />
+    <action
+        android:id="@+id/action_btn_to_map"
+        app:destination="@id/MapFragment" />
+</navigation>
