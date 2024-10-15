@@ -12,7 +12,7 @@
         android:text="Toto je PROFILE"/>
 
     <com.example.mobv.BottomBarLayout
-    android:layout_height="wrap_content" android:layout_width="wrap_content"
+    android:layout_height="wrap_content" android:layout_width="match_parent"
     android:layout_gravity="bottom"/>
 
 </FrameLayout>

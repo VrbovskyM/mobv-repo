@@ -13,13 +13,13 @@ class BottomBarLayout(context: Context, attrs: AttributeSet? = null) : Constrain
     init {
         LayoutInflater.from(context).inflate(R.layout.bottom_bar_layout, this, true)
 
-        findViewById<ImageView>(R.id.ic_action_name).setOnClickListener {
-            findNavController().navigate(R.id.action_btn_to_feed)
-        }
-        findViewById<ImageView>(R.id.img2).setOnClickListener {
+        findViewById<ImageView>(R.id.map).setOnClickListener {
             findNavController().navigate(R.id.action_btn_to_map)
         }
-        findViewById<ImageView>(R.id.img3).setOnClickListener {
+        findViewById<ImageView>(R.id.feed).setOnClickListener {
+            findNavController().navigate(R.id.action_btn_to_feed)
+        }
+        findViewById<ImageView>(R.id.profile).setOnClickListener {
             findNavController().navigate(R.id.action_btn_to_profile)
         }
     }

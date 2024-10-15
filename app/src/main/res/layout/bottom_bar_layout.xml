@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_marginBottom="5dp">
 
     <ImageView
-        android:id="@+id/ic_action_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_action_name"
+        android:id="@+id/map"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/map"
+        style="@style/NavButtonStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/img2"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@id/feed"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"/>
 
     <ImageView
-        android:id="@+id/img2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/img2"
-        app:layout_constraintStart_toEndOf="@id/ic_action_name"
-        app:layout_constraintEnd_toStartOf="@id/img3"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:id="@+id/feed"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/feed"
+        style="@style/NavButtonStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/map"
+        app:layout_constraintEnd_toStartOf="@id/profile"/>
 
     <ImageView
-        android:id="@+id/img3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/img3"
-        app:layout_constraintStart_toEndOf="@id/img2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
+        android:id="@+id/profile"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/profile"
+        style="@style/NavButtonStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/feed"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

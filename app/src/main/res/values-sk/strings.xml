@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">mobv-sk</string>
+    <string name="login">Prihlas sa</string>
+    <string name="register">Registruj sa</string>
+    <string name="welcome">Vitaj v mojej Appke</string>
+    <string name="ph_pw">heslo</string>
+    <string name="ph_name">meno</string>
+    <string name="name_title">Meno</string>
+    <string name="pw_title">Heslo</string>
+    <string name="ph_email">Zadaj email</string>
+    <string name="repeat_pw_title">Zopakuj heslo</string>
+    <string name="ph_repeat_pw">Zopakuj heslo</string>
+</resources>

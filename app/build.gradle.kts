@@ -39,6 +39,7 @@ dependencies {
     implementation ("androidx.navigation:navigation-fragment-ktx:2.3.5")
     implementation ("androidx.navigation:navigation-ui-ktx:2.3.5")
     implementation("com.mapbox.maps:android:10.16.0") // Použite najnovšiu verziu, ak je k dispozícii.
+    implementation ("com.google.android.material:material:1.12.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
