@@ -3,13 +3,13 @@
     <string name="login">Login</string>
     <string name="mapbox_access_token" translatable="false">pk.eyJ1IjoiYS1yYWQiLCJhIjoiY20xa3lkbDN3MDN0YjJqc24yNzU4MnhnaiJ9.ShR_aNjIlVtYCg6EErAcOg</string>
     <string name="register">Register</string>
-    <string name="welcome">Welcome to my App</string>
+    <string name="welcome">Ketchup with friends</string>
     <string name="ph_pw">password</string>
     <string name="ph_name">username</string>
     <string name="name_title">Name</string>
     <string name="pw_title">Password</string>
-    <string name="ph_email">Enter email</string>
+    <string name="ph_email">enter email</string>
     <string name="repeat_pw_title">Repeat password</string>
     <string name="emaiL_title" translatable="false">Email</string>
-    <string name="ph_repeat_pw">Repeat password</string>
+    <string name="ph_repeat_pw">repeat password</string>
 </resources>
