@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/RegFragment"
-        android:name="com.example.mobv.fragments.RegFragment">
+        android:name="com.example.mobv.fragments.RegistrationFragment">
         <action
             android:id="@+id/action_RegFragment_to_ProfileFragment"
             app:destination="@id/ProfileFragment" />
