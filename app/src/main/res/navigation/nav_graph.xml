@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/IntroFragment"
-        android:name="com.example.mobv.IntroFragment">
+        android:name="com.example.mobv.fragments.IntroFragment">
         <action
             android:id="@+id/toLogin"
             app:destination="@id/LoginFragment" />
@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/LoginFragment"
-        android:name="com.example.mobv.LoginFragment">
+        android:name="com.example.mobv.fragments.LoginFragment">
         <action
             android:id="@+id/action_LoginFragment_to_ProfileFragment"
             app:destination="@id/ProfileFragment" />
@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/RegFragment"
-        android:name="com.example.mobv.RegFragment">
+        android:name="com.example.mobv.fragments.RegFragment">
         <action
             android:id="@+id/action_RegFragment_to_ProfileFragment"
             app:destination="@id/ProfileFragment" />
@@ -33,17 +33,17 @@
 
     <fragment
         android:id="@+id/ProfileFragment"
-        android:name="com.example.mobv.ProfileFragment" >
+        android:name="com.example.mobv.fragments.ProfileFragment" >
 
     </fragment>
 
     <fragment
         android:id="@+id/MapFragment"
-        android:name="com.example.mobv.MapFragment">
+        android:name="com.example.mobv.fragments.MapFragment">
     </fragment>
     <fragment
         android:id="@+id/FeedFragment"
-        android:name="com.example.mobv.FeedFragment" >
+        android:name="com.example.mobv.fragments.FeedFragment" >
 
     </fragment>
 

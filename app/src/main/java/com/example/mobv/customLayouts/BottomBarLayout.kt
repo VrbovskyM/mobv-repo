@@ -1,13 +1,12 @@
-package com.example.mobv
+package com.example.mobv.customLayouts
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.Button
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
+import com.example.mobv.R
 
 class BottomBarLayout(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
     init {

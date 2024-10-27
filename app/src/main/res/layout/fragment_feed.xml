@@ -16,7 +16,7 @@
         android:layout_height="0dp"
         android:layout_width="match_parent"/>
 
-    <com.example.mobv.BottomBarLayout
+    <com.example.mobv.customLayouts.BottomBarLayout
         android:id="@+id/bottomBarLayout"
         android:layout_height="wrap_content" android:layout_width="match_parent"
         android:layout_gravity="bottom"

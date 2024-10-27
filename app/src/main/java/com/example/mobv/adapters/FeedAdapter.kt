@@ -1,4 +1,4 @@
-package com.example.mobv
+package com.example.mobv.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mobv.R
 
 data class MyItem(val id: Int, val imageResource: Int, val text: String) {
     override fun equals(other: Any?): Boolean {
