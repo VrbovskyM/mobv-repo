@@ -24,6 +24,18 @@ class RegistrationFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_registration, container, false)
+
+        view.findViewById<Button>(R.id.reg_btn).setOnClickListener {
+            findNavController().navigate(R.id.action_RegFragment_to_ProfileFragment)
+        }
+        return view
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
