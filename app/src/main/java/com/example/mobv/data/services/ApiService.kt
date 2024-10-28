@@ -13,6 +13,10 @@ interface ApiService {
     @POST("user/create.php")
     suspend fun registerUser(@Body userInfo: UserRegistration): Response<RegistrationResponse>
 
+    @Headers("x-apikey: ${AppConfig.API_KEY}")
+    @POST("user/login.php")
+    suspend fun loginUser(@Body userInfo: UserLogin): Response<LoginResponse>
+
     companion object{
         fun create(): ApiService {
 

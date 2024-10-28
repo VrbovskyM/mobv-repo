@@ -13,6 +13,7 @@ constraintlayout = "2.1.4"
 playServicesMaps = "19.0.0"
 roomCommon = "2.6.1"
 databindingCommon = "8.7.1"
+playServicesIdentityCredentials = "16.0.0-alpha03"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -28,6 +29,7 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
 androidx-databinding-common = { group = "androidx.databinding", name = "databinding-common", version.ref = "databindingCommon" }
+play-services-identity-credentials = { group = "com.google.android.gms", name = "play-services-identity-credentials", version.ref = "playServicesIdentityCredentials" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

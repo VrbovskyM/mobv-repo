@@ -11,7 +11,7 @@
         android:id="@+id/label1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/name_title"
+        android:text="@string/emaiL_title"
         style="@style/BaseTextStyle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,7 +20,7 @@
         android:id="@+id/editText1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/ph_name"
+        android:hint="@string/ph_email"
         android:textColorHint="@color/hint_white"
         style="@style/SmallTextStyle"
         app:layout_constraintTop_toBottomOf="@+id/label1"
@@ -31,9 +31,8 @@
         android:id="@+id/label2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pw_title"
+        android:text="@string/name_title"
         style="@style/BaseTextStyle"
-        android:textColorHint="@color/hint_white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText1" />
 
@@ -41,10 +40,31 @@
         android:id="@+id/editText2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:hint="@string/ph_name"
+        android:textColorHint="@color/hint_white"
+        style="@style/SmallTextStyle"
+        app:layout_constraintTop_toBottomOf="@+id/label2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/label3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pw_title"
+        style="@style/BaseTextStyle"
+        android:textColorHint="@color/hint_white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:hint="@string/ph_pw"
         style="@style/SmallTextStyle"
         android:textColorHint="@color/hint_white"
-        app:layout_constraintTop_toBottomOf="@+id/label2"
+        app:layout_constraintTop_toBottomOf="@+id/label3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

@@ -20,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar
 class RegistrationFragment : Fragment() {
 
     private lateinit var viewModel: AuthViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
