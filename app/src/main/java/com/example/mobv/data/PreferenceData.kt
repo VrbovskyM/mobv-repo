@@ -45,4 +45,27 @@ class PreferenceData private constructor() {
             User.fromJson(json)
         }
     }
+    /**
+     * Updates all fields of existing user if IDs match.
+     * Returns true if user was found and updated, false otherwise.
+     */
+    fun updateUser(updatedUser: User): Boolean {
+        val currentUser = getUser()
+
+        return if (currentUser?.id == updatedUser.id) {
+            // Create new User object with updated fields
+            val newUser = User(
+                id = currentUser.id,  // keep original ID
+                username = updatedUser.username,
+                email = updatedUser.email,
+                access = updatedUser.access,
+                refresh = updatedUser.refresh,
+                photo = updatedUser.photo
+            )
+            putUser(newUser)
+            true
+        } else {
+            false
+        }
+    }
 }

@@ -1,6 +1,5 @@
 package com.example.mobv.viewModels
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,21 +18,44 @@ class AuthViewModel(private val dataRepository: DataRepository) : ViewModel() {
     private val _loginResult = MutableLiveData<Pair<String, User?>>()
     val loginResult: LiveData<Pair<String, User?>> get() = _loginResult
 
-    val changePasswordResult = MutableLiveData<StatusAndMessageResponse>()
+    private val _userResult = MutableLiveData<User?>()
+    val userResult: LiveData<User?> get() = _userResult
 
+    val changePasswordResult = MutableLiveData<StatusAndMessageResponse>()
     val resetPasswordResult = MutableLiveData<Evento<StatusAndMessageResponse>>()
+    val username = MutableLiveData<String>()
+    val email = MutableLiveData<String>()
+    val password = MutableLiveData<String>()
+    val repeat_password = MutableLiveData<String>()
 
     fun registerUser(username: String, email: String, password: String) {
         viewModelScope.launch {
-            _registrationResult.postValue(dataRepository.apiRegisterUser(username, email, password))
+            val result = dataRepository.apiRegisterUser(username, email, password)
+            _registrationResult.postValue(result)
+
+            if (result.second != null) {
+                loadAndUpdateUserInPreference(result.second!!.id)
+            }
         }
     }
 
-    fun loginUser(name: String, password: String) {
+    fun loginUser() {
         viewModelScope.launch {
-            val result = dataRepository.apiLoginUser(name, password)
+            val result = dataRepository.apiLoginUser(username.value?:"", password.value?:"")
             _loginResult.postValue(result)
+
+            if (result.second != null) {
+                loadAndUpdateUserInPreference(result.second!!.id)
+            }
         }
+    }
+    private suspend fun loadAndUpdateUserInPreference(userId: String): Boolean {
+        val result = dataRepository.apiGetUser(userId)
+        if (result.second != null) {
+            val isUpdated = PreferenceData.getInstance().updateUser(result.second!!)
+            return isUpdated
+        }
+        return false
     }
 
     fun logout() {
@@ -50,9 +72,9 @@ class AuthViewModel(private val dataRepository: DataRepository) : ViewModel() {
         }
     }
 
-    fun resetPassword(email: String) {
+    fun resetPassword() {
         viewModelScope.launch {
-            resetPasswordResult.postValue(Evento(dataRepository.apiResetPassword(email)))
+            resetPasswordResult.postValue(Evento(dataRepository.apiResetPassword(email.value?:"")))
         }
     }
 }

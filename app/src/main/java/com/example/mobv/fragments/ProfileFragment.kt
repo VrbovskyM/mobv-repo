@@ -67,11 +67,14 @@ class ProfileFragment : Fragment() {
 
         authViewModel.loginResult.observe(viewLifecycleOwner){ userPair ->
             usernameText.text = userPair.second?.username ?: "Unknown"
-            Glide.with(this)
-                .load(userPair.second?.photo)
-                .circleCrop()
-                .placeholder(R.drawable.default_profile_photo)
-                .into(profileImage)
+            val photoUrl = userPair.second?.photo
+            if (!photoUrl.isNullOrBlank()) {
+                // Only load with Glide if the photo URL is not empty or null
+                Glide.with(this)
+                    .load(photoUrl)
+                    .circleCrop()
+                    .into(profileImage)
+            }
         }
         authViewModel.changePasswordResult.observe(viewLifecycleOwner) { result ->
             if (result.status == "success") {

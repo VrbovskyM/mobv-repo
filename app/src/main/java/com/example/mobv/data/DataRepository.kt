@@ -79,17 +79,7 @@ class DataRepository private constructor(private val service: ApiService, privat
             val user = User(name, "", loginBody.uid, loginBody.access, loginBody.refresh)
             PreferenceData.getInstance().putUser(user)
 
-            return apiGetUser(loginBody.uid).let { userProfile ->
-                if (userProfile.second == null) return Pair("Logged in but failed to load user", user)
-
-                user.apply {
-                    username = userProfile.second?.username ?: ""
-                    photo = userProfile.second?.photo ?: ""
-                }
-                PreferenceData.getInstance().putUser(user)
-                Pair("Logged in and loaded User", user)
-            }
-
+            return Pair("Logged in user", user)
         }catch (ex: IOException) {
             ex.printStackTrace()
             return Pair("Check internet connection. Failed to login user.", null)
@@ -170,6 +160,7 @@ class DataRepository private constructor(private val service: ApiService, privat
     }
 
     suspend fun apiResetPassword(email: String): StatusAndMessageResponse {
+        if (email.isEmpty()) return StatusAndMessageResponse("Error","Email cannot be empty")
         try {
             val response = service.resetPassword(resetPasswordRequest(email))
 

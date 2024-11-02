@@ -15,6 +15,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.mobv.R
 import com.example.mobv.data.DataRepository
+import com.example.mobv.databinding.ForgotPasswordDialogBinding
+import com.example.mobv.databinding.FragmentLoginBinding
 import com.example.mobv.viewModels.AuthViewModel
 import com.google.android.material.snackbar.Snackbar
 
@@ -24,8 +26,10 @@ import com.google.android.material.snackbar.Snackbar
  * create an instance of this fragment.
  */
 class LoginFragment : Fragment() {
-
     private lateinit var viewModel: AuthViewModel
+    private var binding: FragmentLoginBinding? = null
+    private var dialogBinding: ForgotPasswordDialogBinding? = null  // Add this line
+    private var resetPasswordDialog: Dialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,16 +37,25 @@ class LoginFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        var forgotPasswordBtn = view.findViewById<Button>(R.id.forgot_password_btn)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         viewModel = ViewModelProvider(requireActivity(), object : ViewModelProvider.Factory {
-            override fun <T : ViewModel>create(modelClass: Class<T>): T {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return AuthViewModel(DataRepository.getInstance(requireContext())) as T
             }
         })[AuthViewModel::class.java]
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val forgotPasswordBtn = view.findViewById<Button>(R.id.forgot_password_btn)
+
+        binding = FragmentLoginBinding.bind(view).apply {
+            lifecycleOwner = viewLifecycleOwner
+            model = viewModel
+            loginFragment  = this@LoginFragment
+        }
 
         viewModel.loginResult.observe(viewLifecycleOwner){ result ->
             if (result.second != null && result.second?.id != "-1"){
@@ -64,57 +77,49 @@ class LoginFragment : Fragment() {
                 ).show()
             }
         }
-
-        view.findViewById<TextView>(R.id.login_btn).apply {
-            setOnClickListener {
-                viewModel.loginUser(
-                    view.findViewById<EditText>(R.id.editText1).text.toString(),
-                    view.findViewById<EditText>(R.id.editText2).text.toString()
-                )
-            }
-        }
         forgotPasswordBtn.setOnClickListener {
             showResetPasswordDialog()
         }
     }
-    private fun showResetPasswordDialog() {
+
+    fun showResetPasswordDialog() {
         // Create a new Dialog instance
-        val dialog = Dialog(requireContext())
+        resetPasswordDialog = Dialog(requireContext())
 
-        // Set the custom layout for the dialog
-        dialog.setContentView(R.layout.forgot_password_dialog)
-
-        // Find views in the dialog layout
-        val emailEditText = dialog.findViewById<EditText>(R.id.email_edittext)
-        val confirmButton = dialog.findViewById<Button>(R.id.confirm_button)
-        val cancelButton = dialog.findViewById<Button>(R.id.cancel_button)
-
-        // Set up button listeners
-        confirmButton.setOnClickListener {
-            val email = emailEditText.text.toString()
-            handleChangePassword(email)
-            dialog.dismiss() // Close the dialog after handling the change password
+        // Initialize dialog binding
+        dialogBinding = ForgotPasswordDialogBinding.inflate(LayoutInflater.from(context)).apply {
+            model = viewModel
+            loginFragment = this@LoginFragment
+            lifecycleOwner = viewLifecycleOwner
         }
 
-        cancelButton.setOnClickListener {
-            dialog.dismiss() // Close the dialog without any action
-        }
+        // Set the custom layout for the dialog using the binding's root
+        resetPasswordDialog?.setContentView(dialogBinding?.root!!)
 
         // Show the dialog
-        dialog.show()
+        resetPasswordDialog?.show()
 
         // Optional: Adjust the layout parameters (like width, height, and dim effect)
-        dialog.window?.setLayout(
+        resetPasswordDialog?.window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
     }
 
-    private fun handleChangePassword(email: String) {
-        if (email.isNotEmpty()) {
-            viewModel.resetPassword(email)
-        } else {
-            Snackbar.make(requireView(), "Email can not be empty", Snackbar.LENGTH_SHORT).show()
-        }
+    fun onResetClickConfirmed() {
+        viewModel.resetPassword()
+        closeResetPasswordDialog()
+    }
+
+    fun closeResetPasswordDialog() {
+        resetPasswordDialog?.dismiss()
+        resetPasswordDialog = null
+        dialogBinding = null  // Clean up the binding
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+        dialogBinding = null  // Clean up the binding
     }
 }
