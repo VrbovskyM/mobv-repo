@@ -1,21 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+<!--  TEXT  -->
     <style name="BaseTextStyle">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">#C8C8C8</item>
+        <item name="android:textColor">@color/text_primary</item>
     </style>
+
     <style name="LargeTextStyle" parent="BaseTextStyle">
         <item name="android:textSize">24sp</item>
+    </style>
+    <style name="LargeBoldTextStyle" parent="BaseTextStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
     <style name="SmallTextStyle" parent="BaseTextStyle">
         <item name="android:textSize">14sp</item>
     </style>
-    <style name="NavButtonStyle">
-        <item name="android:tint">@color/btn_text_grey</item>
-    </style>
-    <style name="ButtonStyle">
-        <item name="android:textColor">@color/btn_text_grey</item>
-        <item name="android:backgroundTint">@color/button_green</item>
+    <style name="PlaceHolderText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColorHint">@color/placeholder_text</item>
     </style>
 
+
+
+<!--  TINT  -->
+    <style name="WhiteIconTint">
+        <item name="android:tint">@color/white</item>
+    </style>
+    <style name="BrownIconTint">
+        <item name="android:tint">@color/nav_icon_color</item>
+    </style>
+<!--  BUTTONS  -->
+    <style name="ActionButton">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:backgroundTint">@color/button_primary</item>
+    </style>
+    <style name="NonActionButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">@color/button_primary</item>
+        <item name="strokeColor">@color/button_primary</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:backgroundTintMode">multiply</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

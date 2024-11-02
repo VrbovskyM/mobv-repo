@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.androidx.room.common)
     implementation(libs.androidx.databinding.common)
+    implementation(libs.play.services.identity.credentials)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -69,4 +70,8 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
     implementation(kotlin("script-runtime"))
+
+    // Glide lib na kniznice
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
 }

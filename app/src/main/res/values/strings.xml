@@ -12,4 +12,17 @@
     <string name="repeat_pw_title">Repeat password</string>
     <string name="emaiL_title" translatable="false">Email</string>
     <string name="ph_repeat_pw">repeat password</string>
+    <string name="login_title">Login to Your Account</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="register_title">Create an account</string>
+    <string name="change_pw">CHANGE PASSWORD</string>
+    <string name="old_pw_hint">enter Old Password</string>
+    <string name="old_pw_title">Old Password</string>
+    <string name="new_pw_title">New password</string>
+    <string name="new_pw_hint">enter new password</string>
+    <string name="re_enter_pw_title">Re-enter new password</string>
+    <string name="re_enter_pw_hint">enter new password</string>
+    <string name="cancel_btn">Cancel</string>
+    <string name="confirm_btn">Confirm</string>
+    <string name="reset_btn" translatable="false">Reset</string>
 </resources>

@@ -42,17 +42,17 @@ class RegistrationFragment : Fragment() {
 
         viewModel = ViewModelProvider(requireActivity(), object : ViewModelProvider.Factory {
             override fun <T : ViewModel>create(modelClass: Class<T>): T {
-                return AuthViewModel(DataRepository.getInstance()) as T
+                return AuthViewModel(DataRepository.getInstance(requireContext())) as T
             }
         })[AuthViewModel::class.java]
 
-        viewModel.registrationResult.observe(viewLifecycleOwner){
-            if (it.second != null){
+        viewModel.registrationResult.observe(viewLifecycleOwner){ result ->
+            if (result.second != null){
                 requireView().findNavController().navigate(R.id.action_RegFragment_to_ProfileFragment)
             }else{
                 Snackbar.make(
                     view.findViewById(R.id.reg_btn),
-                    it.first,
+                    result.first,
                     Snackbar.LENGTH_SHORT
                 ).show()
             }

@@ -1,9 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">#3F51B5</item>
-        <item name="colorPrimaryDark">#303F9F</item>
-        <item name="colorAccent">#FF4081</item>
+        <!-- Primary color: warm terracotta -->
+        <item name="colorPrimary">@color/button_primary</item> <!-- Button primary color -->
+        <item name="colorPrimaryDark">@color/dark_brown</item> <!-- Dark brown for status bar -->
+        <item name="colorAccent">@color/accent_color</item> <!-- Muted coral accent color -->
+        <item name="android:windowBackground">@color/background_color</item> <!-- Soft cream background -->
     </style>
 
     <style name="Theme.Mobv" parent="Base.Theme.Mobv" />

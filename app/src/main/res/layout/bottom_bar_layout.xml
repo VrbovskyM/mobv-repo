@@ -8,10 +8,10 @@
 
     <ImageView
         android:id="@+id/map"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/map"
-        style="@style/NavButtonStyle"
+        style="@style/BrownIconTint"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/feed"
@@ -19,20 +19,20 @@
 
     <ImageView
         android:id="@+id/feed"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/feed"
-        style="@style/NavButtonStyle"
+        style="@style/BrownIconTint"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/map"
         app:layout_constraintEnd_toStartOf="@id/profile"/>
 
     <ImageView
         android:id="@+id/profile"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/profile"
-        style="@style/NavButtonStyle"
+        style="@style/BrownIconTint"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/feed"
         app:layout_constraintEnd_toEndOf="parent"/>

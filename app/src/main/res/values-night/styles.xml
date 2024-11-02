@@ -4,7 +4,7 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">#D5D5D5</item>
     </style>
-    <style name="ButtonStyle" parent="BaseTextStyle">
+    <style name="ActionButton" parent="BaseTextStyle">
         <item name="android:textColor">#CCCCCC</item>
     </style>
     <style name="LargeTextStyle" parent="BaseTextStyle">

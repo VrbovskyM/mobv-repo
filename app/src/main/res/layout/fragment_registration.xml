@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,22 +9,32 @@
     android:background="@color/background_color">
 
     <TextView
+        android:id="@+id/reg_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_title"
+        style="@style/LargeBoldTextStyle"
+        android:paddingBottom="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" /> <!-- Centered title -->
+
+    <TextView
         android:id="@+id/label1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/emaiL_title"
+        android:text="@string/name_title"
         style="@style/BaseTextStyle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/reg_title" />
 
     <EditText
         android:id="@+id/editText1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/ph_email"
-        android:textColorHint="@color/hint_white"
-        style="@style/SmallTextStyle"
-        app:layout_constraintTop_toBottomOf="@+id/label1"
+        style="@style/PlaceHolderText"
+        app:layout_constraintTop_toBottomOf="@id/label1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -34,16 +45,15 @@
         android:text="@string/name_title"
         style="@style/BaseTextStyle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText1" />
+        app:layout_constraintTop_toBottomOf="@id/editText1" />
 
     <EditText
         android:id="@+id/editText2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/ph_name"
-        android:textColorHint="@color/hint_white"
-        style="@style/SmallTextStyle"
-        app:layout_constraintTop_toBottomOf="@+id/label2"
+        style="@style/PlaceHolderText"
+        app:layout_constraintTop_toBottomOf="@id/label2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -54,16 +64,16 @@
         android:text="@string/pw_title"
         style="@style/BaseTextStyle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@id/editText2" />
 
     <EditText
         android:id="@+id/editText3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/ph_pw"
-        android:textColorHint="@color/hint_white"
-        style="@style/SmallTextStyle"
-        app:layout_constraintTop_toBottomOf="@+id/label3"
+        style="@style/PlaceHolderText"
+        android:inputType="textPassword"
+        app:layout_constraintTop_toBottomOf="@id/label3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -73,31 +83,28 @@
         android:layout_height="wrap_content"
         android:text="@string/repeat_pw_title"
         style="@style/BaseTextStyle"
-        android:textColorHint="@color/hint_white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText3"
-        />
+        app:layout_constraintTop_toBottomOf="@id/editText3" />
 
     <EditText
         android:id="@+id/editText4"
+        style="@style/PlaceHolderText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/ph_repeat_pw"
-        android:textColorHint="@color/hint_white"
-        style="@style/SmallTextStyle"
-        app:layout_constraintTop_toBottomOf="@+id/label4"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/label4" />
 
     <Button
         android:id="@+id/reg_btn"
-        android:layout_width="wrap_content"
+        style="@style/ActionButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="@string/register"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        style="@style/ButtonStyle"/>
+        app:layout_constraintTop_toBottomOf="@+id/editText4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

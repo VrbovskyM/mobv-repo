@@ -11,4 +11,16 @@
     <string name="ph_email">zadaj email</string>
     <string name="repeat_pw_title">Zopakuj heslo</string>
     <string name="ph_repeat_pw">zopakuj heslo</string>
+    <string name="login_title">Prihláste sa do svojho účtu</string>
+    <string name="forgot_password">Zabudli ste heslo?</string>
+    <string name="register_title">Vytvor si účet</string>
+    <string name="change_pw">ZMENA HESLA</string>
+    <string name="old_pw_hint">napíšte stare heslo</string>
+    <string name="old_pw_title">Staré heslo</string>
+    <string name="new_pw_title">Nové heslo</string>
+    <string name="new_pw_hint">napíšte nové heslo</string>
+    <string name="re_enter_pw_title">Zopakujte nove heslo</string>
+    <string name="re_enter_pw_hint">znovu napiste nove heslo</string>
+    <string name="cancel_btn">Zrušiť</string>
+    <string name="confirm_btn">Potvrdiť</string>
 </resources>

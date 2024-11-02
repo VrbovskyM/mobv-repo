@@ -2,8 +2,25 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="background_color">#873333</color>
-    <color name="button_green">#3E7C2F</color>
     <color name="hint_white">#A09A9A</color>
     <color name="btn_text_grey">#DBDBDB</color>
+    <!-- Background color: soft cream -->
+    <color name="background_color">#FFF8DA</color>
+
+    <!-- Primary text color: rich brown -->
+    <color name="text_primary">#5D4037</color>
+    <color name="placeholder_text">#A4BABA</color>
+
+    <!-- Button color: warm terracotta -->
+    <color name="button_primary">#A94D2A</color>
+
+    <!-- Accent color: muted coral for highlights -->
+    <color name="accent_color">#FFAB91</color>
+
+    <!-- Additional muted tones for balance -->
+    <color name="light_beige">#FFCCBC</color>
+    <color name="dark_brown">#3E2723</color>
+
+    <!-- Icon color for navigation bar -->
+    <color name="nav_icon_color">#5D4037</color>
 </resources>
