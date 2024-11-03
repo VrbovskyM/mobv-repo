@@ -75,14 +75,14 @@ class MapFragment : Fragment() {
         annotationManager = mapBinding.mapView.annotations.createCircleAnnotationManager()
 
         // Check if permissions are granted
-        val hasPermission = Utils.hasPermissions()
+        val hasPermission = Utils.hasPermissions(requireContext())
 
         // Handle map readiness based on permission status
         onMapReady(hasPermission)
 
         // Set up click listener for the myLocation button
         mapBinding.myLocation.setOnClickListener {
-            if (!Utils.hasPermissions()) {
+            if (!Utils.hasPermissions(requireContext())) {
                 // Request location permission
                 requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
             } else {
@@ -110,7 +110,7 @@ class MapFragment : Fragment() {
         }
 
         mapBinding.mapView.getMapboxMap().addOnMapClickListener {
-            if (Utils.hasPermissions()) {
+            if (Utils.hasPermissions(requireContext())) {
                 onCameraTrackingDismissed()
             }
             true

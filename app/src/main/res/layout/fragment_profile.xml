@@ -94,15 +94,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Off"
+                android:onClick="@{()->profileFragment.handleSharingModeChange(profileModel.SharingMode.OFF)}"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
             <Button
-                android:id="@+id/mode_manual"
+                android:id="@+id/mode_on"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Manual"
-                android:onClick="@{()->profileFragment.locationSharingMode(profileModel.SharingMode.MANUAL)}"
+                android:text="ON"
+                android:onClick="@{()->profileFragment.handleSharingModeChange(profileModel.SharingMode.ON)}"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
             <Button
@@ -111,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Scheduled"
-                android:onClick="@{()->profileFragment.locationSharingMode(profileModel.SharingMode.SCHEDULED)}"
+                android:onClick="@{()->profileFragment.handleSharingModeChange(profileModel.SharingMode.SCHEDULED)}"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -121,20 +122,19 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
-            android:text="Location sharing is turned OFF!"
+            android:text="@string/location_sharing_is_turned_off"
             android:gravity="center"
             android:visibility="@{profileModel.sharingMode == profileModel.SharingMode.OFF ? android.view.View.VISIBLE : android.view.View.GONE}"
             app:layout_constraintTop_toBottomOf="@id/sharing_mode_toggle"/>
-
-        <!-- Manual Mode Section -->
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/manual_sharing_switch"
+        <TextView
+            android:id="@+id/on_status_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Share my location"
-            android:checked="@={profileModel.manualSharingEnabled}"
-            android:layout_margin="16dp"
-            android:visibility="@{profileModel.sharingMode == profileModel.SharingMode.MANUAL ? android.view.View.VISIBLE : android.view.View.GONE}"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Location sharing is turned ON!"
+            android:gravity="center"
+            android:visibility="@{profileModel.sharingMode == profileModel.SharingMode.ON ? android.view.View.VISIBLE : android.view.View.GONE}"
             app:layout_constraintTop_toBottomOf="@id/sharing_mode_toggle"/>
 
         <!-- Scheduled Mode Section -->

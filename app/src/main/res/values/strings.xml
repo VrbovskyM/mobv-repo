@@ -25,4 +25,5 @@
     <string name="cancel_btn">Cancel</string>
     <string name="confirm_btn">Confirm</string>
     <string name="reset_btn" translatable="false">Reset</string>
+    <string name="location_sharing_is_turned_off">Location sharing is turned OFF!</string>
 </resources>

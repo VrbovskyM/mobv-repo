@@ -24,7 +24,7 @@ class ProfileViewModel(private val dataRepository: DataRepository) : ViewModel()
     val repeatNewPassword = MutableLiveData<String>()
 
     var sharingMode: MutableLiveData<SharingMode> = MutableLiveData(SharingMode.MANUAL)
-    var manualSharingEnabled: MutableLiveData<Boolean> = MutableLiveData(false)
+    //var manualSharingEnabled: MutableLiveData<Boolean> = MutableLiveData(false)
     var scheduledSharing: MutableLiveData<ScheduledTime> = MutableLiveData(ScheduledTime(0,0,0,0))
 
     fun changePassword() {

@@ -14,6 +14,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
@@ -30,6 +31,7 @@ import com.example.mobv.databinding.DialogChangePasswordBinding
 import com.example.mobv.databinding.ForgotPasswordDialogBinding
 import com.example.mobv.databinding.FragmentLoginBinding
 import com.example.mobv.databinding.FragmentProfileBinding
+import com.example.mobv.utils.Utils
 import com.example.mobv.viewModels.AuthViewModel
 import com.example.mobv.viewModels.ProfileViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -54,14 +56,14 @@ class ProfileFragment : Fragment() {
     private var authBinding: DialogChangePasswordBinding? = null
 
     private var changePasswordDialog: Dialog? = null
-    private val PERMISSIONS_REQUIRED = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+    private var requestedSharingMode: SharingMode? = null
     val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted){
-            startLocationTracking()
+            setSharingMode(requestedSharingMode!!)
         }else{
-            // run logic if user not accepted usage of gps location
+            setSharingMode(SharingMode.OFF)
         }
     }
 
@@ -102,18 +104,19 @@ class ProfileFragment : Fragment() {
                     .into(profileImage)
             }
         }
-        if (!hasPermissions()) {
+        if (!Utils.hasPermissions(requireContext())) {
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
 
         profileViewModel.sharingMode.postValue(PreferenceData.getInstance().getSharingMode())
-        profileViewModel.manualSharingEnabled.postValue(PreferenceData.getInstance().isManualSharing())
+        //profileViewModel.manualSharingEnabled.postValue(PreferenceData.getInstance().isManualSharing())
         profileViewModel.scheduledSharing.postValue(PreferenceData.getInstance().getScheduledTime())
 
         profileBinding!!.sharingModeToggle.check(
             when (PreferenceData.getInstance().getSharingMode()) {
                 SharingMode.SCHEDULED -> R.id.mode_scheduled
-                SharingMode.MANUAL -> R.id.mode_manual
+                SharingMode.ON -> R.id.mode_on
+                else -> R.id.mode_off
             }
         )
     }
@@ -159,52 +162,30 @@ class ProfileFragment : Fragment() {
         changePasswordDialog = null
     }
 
-    // returns if Permissions are accepted
-    fun hasPermissions() = PERMISSIONS_REQUIRED.all {
-        ContextCompat.checkSelfPermission(MyApplication.getContext(), it) == PackageManager.PERMISSION_GRANTED
+
+    private val PERMISSIONS_REQUIRED = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+    fun handleSharingModeChange(mode: SharingMode){
+
+        requestedSharingMode = mode
+        if (mode == SharingMode.ON || mode == SharingMode.SCHEDULED){
+            if (!Utils.hasPermissions(requireContext())){
+                requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+            }
+            else
+                setSharingMode(mode)
+        }
+        else
+            setSharingMode(SharingMode.OFF)
     }
 
-    private fun startLocationTracking() {
-        Snackbar.make(requireView(), "Location tracking started", Snackbar.LENGTH_SHORT).show()
-    }
-
-    fun handleManualSharing() {
-        val isManualSharingEnabled = profileViewModel.manualSharingEnabled.value ?: false
-        if (isManualSharingEnabled && !hasPermissions()){
-            requestPermissionLauncher.launch(
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-            profileViewModel.manualSharingEnabled.postValue(false)
+    private fun setSharingMode(mode: SharingMode, scheduledTime: ScheduledTime? = null){
+        if(mode == SharingMode.SCHEDULED) {
+            PreferenceData.getInstance().putScheduledTime(scheduledTime?:ScheduledTime(0,0,0,0))
+            profileViewModel.scheduledSharing.postValue(scheduledTime?:ScheduledTime(0,0,0,0))
         }
-        else if (isManualSharingEnabled){
-            PreferenceData.getInstance().putManualSharing(true)
-        }
-        else{
-            PreferenceData.getInstance().putManualSharing(false)
-        }
-    }
-
-    fun handleScheduledSharing() {
-        val scheduledTime = profileViewModel.scheduledSharing.value ?: ScheduledTime(0,0,0,0)
-        if (scheduledTime.isSameTime()){
-            PreferenceData.getInstance().putScheduledTime(ScheduledTime(0,0,0,0))
-        }
-        else if (!scheduledTime.isSameTime() && !hasPermissions()){
-            requestPermissionLauncher.launch(
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-            profileViewModel.scheduledSharing.postValue(ScheduledTime(0,0,0,0))
-        }
-        else if (!scheduledTime.isSameTime()){
-            PreferenceData.getInstance().putScheduledTime(scheduledTime)
-        }
-        else{
-            profileViewModel.scheduledSharing.postValue(ScheduledTime(0,0,0,0))
-        }
-    }
-
-    fun locationSharingMode(mode: SharingMode){
         PreferenceData.getInstance().putSharingMode(mode)
         profileViewModel.sharingMode.postValue(mode)
+
     }
+
 }

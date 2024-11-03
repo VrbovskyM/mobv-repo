@@ -23,4 +23,5 @@
     <string name="re_enter_pw_hint">znovu napiste nove heslo</string>
     <string name="cancel_btn">Zrušiť</string>
     <string name="confirm_btn">Potvrdiť</string>
+    <string name="location_sharing_is_turned_off">Zdielanie polohy je vypnuté!</string>
 </resources>
