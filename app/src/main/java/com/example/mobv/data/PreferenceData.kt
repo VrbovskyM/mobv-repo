@@ -81,18 +81,8 @@ class PreferenceData private constructor() {
             .apply()
     }
     fun getSharingMode(): SharingMode {
-        val modeString = sharedPreferences.getString(sharingModeKey, SharingMode.MANUAL.name) // Default to MANUAL
-        return SharingMode.valueOf(modeString ?: SharingMode.MANUAL.name)
-    }
-
-    // Manual Sharing
-    fun putManualSharing(isEnabled: Boolean) {
-        sharedPreferences.edit()
-            .putBoolean(manualSharingKey, isEnabled)
-            .apply()
-    }
-    fun isManualSharing(): Boolean {
-        return sharedPreferences.getBoolean(manualSharingKey, false) // Default to false
+        val modeString = sharedPreferences.getString(sharingModeKey, SharingMode.OFF.name) // Default to MANUAL
+        return SharingMode.valueOf(modeString ?: SharingMode.OFF.name)
     }
 
     // Scheduled Sharing
@@ -105,5 +95,23 @@ class PreferenceData private constructor() {
     fun getScheduledTime(): ScheduledTime? {
         val jsonString = sharedPreferences.getString(scheduledSharingKey, null)
         return jsonString?.let { Gson().fromJson(it, ScheduledTime::class.java) }
+    }
+    // New method to update the scheduled time
+    fun updateScheduledTime(newScheduledTime: ScheduledTime) {
+        // Retrieve the current scheduled time
+        var currentScheduledTime = getScheduledTime()
+
+        // Check if there is an existing scheduled time
+        if (currentScheduledTime != null) {
+            // Update properties as necessary, for example:
+            currentScheduledTime.startHour = newScheduledTime.startHour // Assuming 'time' is a property of ScheduledTime
+            currentScheduledTime.endHour = newScheduledTime.endHour // Update any other necessary fields
+
+            // Save the updated scheduled time
+            putScheduledTime(currentScheduledTime)
+        } else {
+            // If there was no existing scheduled time, you can choose to create a new one
+            putScheduledTime(newScheduledTime)
+        }
     }
 }

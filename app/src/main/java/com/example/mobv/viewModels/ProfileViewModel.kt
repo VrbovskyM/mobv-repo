@@ -10,6 +10,7 @@ import com.example.mobv.data.services.StatusAndMessageResponse
 import com.example.mobv.utils.Evento
 import kotlinx.coroutines.launch
 import android.view.View;
+import android.widget.NumberPicker
 import com.example.mobv.data.models.ScheduledTime
 import com.example.mobv.data.models.SharingMode
 
@@ -23,9 +24,11 @@ class ProfileViewModel(private val dataRepository: DataRepository) : ViewModel()
     val newPassword = MutableLiveData<String>()
     val repeatNewPassword = MutableLiveData<String>()
 
-    var sharingMode: MutableLiveData<SharingMode> = MutableLiveData(SharingMode.MANUAL)
-    //var manualSharingEnabled: MutableLiveData<Boolean> = MutableLiveData(false)
-    var scheduledSharing: MutableLiveData<ScheduledTime> = MutableLiveData(ScheduledTime(0,0,0,0))
+    var sharingMode: MutableLiveData<SharingMode> = MutableLiveData(SharingMode.OFF)
+    var scheduledSharing: MutableLiveData<ScheduledTime> = MutableLiveData(ScheduledTime(0,0))
+
+    lateinit var startHourPicker: MutableLiveData<NumberPicker>
+    lateinit var endHourPicker: MutableLiveData<NumberPicker>
 
     fun changePassword() {
         viewModelScope.launch{
