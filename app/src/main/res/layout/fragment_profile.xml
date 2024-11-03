@@ -1,61 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:id="@+id/logout_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/logout_btn"
-        android:padding="8dp"
-        style="@style/BrownIconTint"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"
-        android:contentDescription="Logout"/>
+    <data>
+        <variable
+            name="profileModel"
+            type="com.example.mobv.viewModels.ProfileViewModel" />
+        <variable
+            name="profileFragment"
+            type="com.example.mobv.fragments.ProfileFragment" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/profile_image"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:contentDescription="Profile Image"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.1"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/default_profile_photo"/>
+        <ImageView
+            android:id="@+id/logout_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/logout_btn"
+            android:padding="8dp"
+            style="@style/BrownIconTint"
+            android:onClick="@{()->profileFragment.logout()}"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            android:contentDescription="Logout"/>
 
-    <TextView
-        android:id="@+id/username_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/LargeTextStyle"
-        app:layout_constraintTop_toBottomOf="@id/profile_image"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="Profile Image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.1"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/default_profile_photo"/>
 
-    <Button
-        android:id="@+id/change_password_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/change_pw"
-        android:layout_marginTop="32dp"
-        android:layout_marginHorizontal="16dp"
-        style="@style/NonActionButton"
-        app:layout_constraintTop_toBottomOf="@id/username_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        <TextView
+            android:id="@+id/username_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/LargeTextStyle"
+            app:layout_constraintTop_toBottomOf="@id/profile_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"/>
 
-    <com.example.mobv.customLayouts.BottomBarLayout
-        android:id="@+id/bottomBarLayout"
-        android:layout_height="wrap_content" android:layout_width="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        <Button
+            android:id="@+id/change_password_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/change_pw"
+            android:layout_marginTop="32dp"
+            android:layout_marginHorizontal="16dp"
+            style="@style/NonActionButton"
+            android:onClick="@{()->profileFragment.showChangePasswordDialog()}"
+            app:layout_constraintTop_toBottomOf="@id/username_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:snackbarMessage="@{profileModel.changePasswordResult}"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Location Sharing Section -->
+        <TextView
+            android:id="@+id/location_sharing_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location Sharing"
+            style="@style/LargeBoldTextStyle"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toBottomOf="@id/change_password_button"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <!-- Sharing Mode Selector -->
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/sharing_mode_toggle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            app:singleSelection="true"
+            app:selectionRequired="true"
+            app:layout_constraintTop_toBottomOf="@id/location_sharing_title">
+
+            <Button
+                android:id="@+id/mode_off"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Off"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+            <Button
+                android:id="@+id/mode_manual"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Manual"
+                android:onClick="@{()->profileFragment.locationSharingMode(profileModel.SharingMode.MANUAL)}"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+            <Button
+                android:id="@+id/mode_scheduled"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Scheduled"
+                android:onClick="@{()->profileFragment.locationSharingMode(profileModel.SharingMode.SCHEDULED)}"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <TextView
+            android:id="@+id/off_status_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Location sharing is turned OFF!"
+            android:gravity="center"
+            android:visibility="@{profileModel.sharingMode == profileModel.SharingMode.OFF ? android.view.View.VISIBLE : android.view.View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/sharing_mode_toggle"/>
+
+        <!-- Manual Mode Section -->
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/manual_sharing_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Share my location"
+            android:checked="@={profileModel.manualSharingEnabled}"
+            android:layout_margin="16dp"
+            android:visibility="@{profileModel.sharingMode == profileModel.SharingMode.MANUAL ? android.view.View.VISIBLE : android.view.View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/sharing_mode_toggle"/>
+
+        <!-- Scheduled Mode Section -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/scheduled_sharing_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:visibility="@{profileModel.sharingMode == profileModel.SharingMode.SCHEDULED ? android.view.View.VISIBLE : android.view.View.GONE}"
+            app:cardElevation="2dp"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintTop_toBottomOf="@id/sharing_mode_toggle">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Active Hours"
+                    style="@style/BaseTextStyle"
+                    android:layout_marginBottom="16dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <!-- Start Time Picker -->
+                    <NumberPicker
+                        android:id="@+id/start_hour_picker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:theme="@style/NumberPickerStyle"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"
+                        android:textSize="24sp"
+                        android:layout_marginHorizontal="4dp"/>
+
+                    <NumberPicker
+                        android:id="@+id/start_minute_picker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:theme="@style/NumberPickerStyle"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="to"
+                        style="@style/BaseTextStyle"
+                        android:layout_marginHorizontal="16dp"/>
+
+                    <!-- End Time Picker -->
+                    <NumberPicker
+                        android:id="@+id/end_hour_picker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:theme="@style/NumberPickerStyle"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"
+                        android:textSize="24sp"
+                        android:layout_marginHorizontal="4dp"/>
+
+                    <NumberPicker
+                        android:id="@+id/end_minute_picker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:theme="@style/NumberPickerStyle"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Status Text -->
+        <TextView
+            android:id="@+id/location_sharing_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            style="@style/SmallTextStyle"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/scheduled_sharing_card"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.example.mobv.customLayouts.BottomBarLayout
+            android:id="@+id/bottomBarLayout"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

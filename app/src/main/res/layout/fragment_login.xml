@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -27,7 +28,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:paddingBottom="40dp"
-            android:textColor="@color/text_primary" />
+            android:textColor="@color/text_primary"
+            app:snackbarMessage="@{model.authResult.first}"/>
 
         <TextView
             android:id="@+id/label1"
@@ -97,7 +99,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp"
             android:background="@android:color/transparent"
-            style="@style/NonActionButton" />
+            style="@style/NonActionButton"
+            app:snackbarMessage="@{model.resetPasswordResult}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -49,7 +49,6 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val forgotPasswordBtn = view.findViewById<Button>(R.id.forgot_password_btn)
 
         binding = FragmentLoginBinding.bind(view).apply {
             lifecycleOwner = viewLifecycleOwner
@@ -57,28 +56,10 @@ class LoginFragment : Fragment() {
             loginFragment  = this@LoginFragment
         }
 
-        viewModel.loginResult.observe(viewLifecycleOwner){ result ->
+        viewModel.authResult.observe(viewLifecycleOwner){ result ->
             if (result.second != null && result.second?.id != "-1"){
                 requireView().findNavController().navigate(R.id.action_LoginFragment_to_ProfileFragment)
-            }else{
-                Snackbar.make(
-                    view.findViewById(R.id.login_btn),
-                    result.first,
-                    Snackbar.LENGTH_SHORT
-                ).show()
             }
-        }
-        viewModel.resetPasswordResult.observe(viewLifecycleOwner) { event ->
-            event.getContentIfNotHandled()?.let { result ->
-                Snackbar.make(
-                    view.findViewById(R.id.login_btn),
-                    result.message,
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            }
-        }
-        forgotPasswordBtn.setOnClickListener {
-            showResetPasswordDialog()
         }
     }
 

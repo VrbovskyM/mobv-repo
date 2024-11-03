@@ -34,33 +34,41 @@ class DataRepository private constructor(private val service: ApiService, privat
         }
     }
 
-    suspend fun apiRegisterUser(username: String, email: String, password: String) : Pair<String,User?>{
-        if (username.isEmpty()){
-            return Pair("Username can not be empty", null)
-        }
-        if (email.isEmpty()){
-            return Pair("Email can not be empty", null)
-        }
-        if (password.isEmpty()){
-            return Pair("Password can not be empty", null)
-        }
+    suspend fun apiRegisterUser(username: String, email: String, password: String) : Pair<String,User?> {
+        // Input validation
+        if (username.isEmpty()) return Pair("Username cannot be empty", null)
+        if (email.isEmpty()) return Pair("Email cannot be empty", null)
+        if (password.isEmpty()) return Pair("Password cannot be empty", null)
 
         try {
-            val response = service.registerUser(UserRegistration(username, email, password))
-            if (response.isSuccessful) {
-                response.body()?.let { json_response ->
-                    return Pair("", User(username,email,json_response.uid, json_response.access, json_response.refresh))
-                }
-            }
-            return Pair("Failed to create user", null)
-        }catch (ex: IOException) {
+            val registerResponse = service.registerUser(UserRegistration(username, email, password))
+
+            if (!registerResponse.isSuccessful) return Pair("Failed to register: ${registerResponse.message()}", null)
+
+            val registerBody = registerResponse.body() ?: return Pair("Registration response was empty", null)
+
+            // Check if registration was successful by verifying uid
+            if (registerBody.uid == "-1") return Pair("Registration failed - username already exists", null)
+            if (registerBody.uid == "-2") return Pair("Registration failed - email already exists", null)
+
+            // Create user object and save to preferences
+            val user = User(
+                username = username,
+                email = email,
+                id = registerBody.uid,
+                access = registerBody.access,
+                refresh = registerBody.refresh
+            )
+            PreferenceData.getInstance().putUser(user)
+
+            return Pair("User registered successfully", user)
+        } catch (ex: IOException) {
             ex.printStackTrace()
-            return Pair("Check internet connection. Failed to create user.", null)
+            return Pair("Check internet connection. Failed to register user.", null)
         } catch (ex: Exception) {
             ex.printStackTrace()
+            return Pair("Fatal error. Failed to register user.", null)
         }
-
-        return Pair("Fatal error. Failed to create user.", null)
     }
 
     suspend fun apiLoginUser(name: String, password: String) : Pair<String,User?>{
@@ -141,15 +149,19 @@ class DataRepository private constructor(private val service: ApiService, privat
     fun getUsers() = cache.getUsers()
 
     suspend fun apiChangePassword(oldPassword: String, newPassword: String): StatusAndMessageResponse {
+        if (oldPassword.isEmpty()) return StatusAndMessageResponse("Error","Old password cannot be empty")
+        if (newPassword.isEmpty()) return StatusAndMessageResponse("Error","New password cannot be empty")
+
         try {
             val response = service.changePassword(newPasswordRequest(oldPassword, newPassword))
 
-            if (response.isSuccessful) {
-                response.body()?.let {
-                    return it
-                }
-            }
-            return StatusAndMessageResponse("Error","Failed to change password")
+            if (!response.isSuccessful) return StatusAndMessageResponse("Error", "Failed; HTTP Code: ${response.code()}")
+
+            val responseBody = response.body() ?: return StatusAndMessageResponse("Error", "Body is empty")
+
+            if (responseBody.status != "success") return StatusAndMessageResponse(responseBody.status, "Body is failure")
+
+            return StatusAndMessageResponse("success", "Password changed successfully")
         } catch (ex: IOException) {
             ex.printStackTrace()
             return StatusAndMessageResponse("Error","Check internet connection. Failed to change password.")

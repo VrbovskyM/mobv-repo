@@ -12,41 +12,39 @@ import com.example.mobv.utils.Evento
 import kotlinx.coroutines.launch
 
 class AuthViewModel(private val dataRepository: DataRepository) : ViewModel() {
-    private val _registrationResult = MutableLiveData<Pair<String, User?>>()
-    val registrationResult: LiveData<Pair<String, User?>> get() = _registrationResult
-
-    private val _loginResult = MutableLiveData<Pair<String, User?>>()
-    val loginResult: LiveData<Pair<String, User?>> get() = _loginResult
+    private val _authResult = MutableLiveData<Pair<String, User?>>()
+    val authResult: LiveData<Pair<String, User?>> get() = _authResult
 
     private val _userResult = MutableLiveData<User?>()
     val userResult: LiveData<User?> get() = _userResult
 
-    val changePasswordResult = MutableLiveData<StatusAndMessageResponse>()
     val resetPasswordResult = MutableLiveData<Evento<StatusAndMessageResponse>>()
     val username = MutableLiveData<String>()
     val email = MutableLiveData<String>()
     val password = MutableLiveData<String>()
-    val repeat_password = MutableLiveData<String>()
+    val repeatPassword = MutableLiveData<String>()
 
-    fun registerUser(username: String, email: String, password: String) {
+    fun registerUser() {
         viewModelScope.launch {
-            val result = dataRepository.apiRegisterUser(username, email, password)
-            _registrationResult.postValue(result)
+            val result = dataRepository.apiRegisterUser(username.value?:"", email.value?:"", password.value?:"")
+            _authResult.postValue(result)
 
             if (result.second != null) {
                 loadAndUpdateUserInPreference(result.second!!.id)
             }
+            clearFormFields()
         }
     }
 
     fun loginUser() {
         viewModelScope.launch {
             val result = dataRepository.apiLoginUser(username.value?:"", password.value?:"")
-            _loginResult.postValue(result)
+            _authResult.postValue(result)
 
             if (result.second != null) {
                 loadAndUpdateUserInPreference(result.second!!.id)
             }
+            clearFormFields()
         }
     }
     private suspend fun loadAndUpdateUserInPreference(userId: String): Boolean {
@@ -60,15 +58,7 @@ class AuthViewModel(private val dataRepository: DataRepository) : ViewModel() {
 
     fun logout() {
         viewModelScope.launch {
-            _loginResult.postValue(Pair("Logging out", null))
-            _registrationResult.postValue(Pair("Logging out", null))
-        }
-    }
-
-    fun changePassword(oldPassword: String, newPassword: String) {
-        viewModelScope.launch{
-            val result = dataRepository.apiChangePassword(oldPassword, newPassword)
-            changePasswordResult.postValue(result)
+            _authResult.postValue(Pair("Logging out", null))
         }
     }
 
@@ -76,5 +66,11 @@ class AuthViewModel(private val dataRepository: DataRepository) : ViewModel() {
         viewModelScope.launch {
             resetPasswordResult.postValue(Evento(dataRepository.apiResetPassword(email.value?:"")))
         }
+    }
+    private fun clearFormFields(){
+        username.postValue("")
+        email.postValue("")
+        password.postValue("")
+        repeatPassword.postValue("")
     }
 }

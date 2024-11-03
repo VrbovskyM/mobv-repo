@@ -21,7 +21,12 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColorHint">@color/placeholder_text</item>
     </style>
-
+    <!--  NUMBER PICKER  -->
+    <style name="NumberPickerStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:colorControlNormal">@color/button_primary</item>
+    </style>
 
 
 <!--  TINT  -->

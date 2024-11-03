@@ -3,7 +3,11 @@ package com.example.mobv.data
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.mobv.MyApplication
+import com.example.mobv.config.AppConfig
+import com.example.mobv.data.models.ScheduledTime
+import com.example.mobv.data.models.SharingMode
 import com.example.mobv.data.models.User
+import com.google.gson.Gson
 
 class PreferenceData private constructor() {
     // Using lazy initialization to get SharedPreferences only when needed
@@ -23,8 +27,12 @@ class PreferenceData private constructor() {
                 INSTANCE ?: PreferenceData().also { INSTANCE = it }
             }
 
-        private const val shpKey = "com.example.mobv"
+        private const val shpKey = AppConfig.SharedPreferences_KEY
         private const val userKey = "userKey"
+        // Add keys for sharing preferences
+        private const val sharingModeKey = "sharingModeKey"
+        private const val manualSharingKey = "manualSharingEnabledKey"
+        private const val scheduledSharingKey = "scheduledSharing"
     }
 
     fun clearData() {
@@ -45,10 +53,7 @@ class PreferenceData private constructor() {
             User.fromJson(json)
         }
     }
-    /**
-     * Updates all fields of existing user if IDs match.
-     * Returns true if user was found and updated, false otherwise.
-     */
+
     fun updateUser(updatedUser: User): Boolean {
         val currentUser = getUser()
 
@@ -67,5 +72,38 @@ class PreferenceData private constructor() {
         } else {
             false
         }
+    }
+
+    // Sharing Modes
+    fun putSharingMode(mode: SharingMode) {
+        sharedPreferences.edit()
+            .putString(sharingModeKey, mode.name) // Store enum name as string
+            .apply()
+    }
+    fun getSharingMode(): SharingMode {
+        val modeString = sharedPreferences.getString(sharingModeKey, SharingMode.MANUAL.name) // Default to MANUAL
+        return SharingMode.valueOf(modeString ?: SharingMode.MANUAL.name)
+    }
+
+    // Manual Sharing
+    fun putManualSharing(isEnabled: Boolean) {
+        sharedPreferences.edit()
+            .putBoolean(manualSharingKey, isEnabled)
+            .apply()
+    }
+    fun isManualSharing(): Boolean {
+        return sharedPreferences.getBoolean(manualSharingKey, false) // Default to false
+    }
+
+    // Scheduled Sharing
+    fun putScheduledTime(scheduledTime: ScheduledTime) {
+        val jsonString = Gson().toJson(scheduledTime)
+        sharedPreferences.edit()
+            .putString(scheduledSharingKey, jsonString)
+            .apply()
+    }
+    fun getScheduledTime(): ScheduledTime? {
+        val jsonString = sharedPreferences.getString(scheduledSharingKey, null)
+        return jsonString?.let { Gson().fromJson(it, ScheduledTime::class.java) }
     }
 }

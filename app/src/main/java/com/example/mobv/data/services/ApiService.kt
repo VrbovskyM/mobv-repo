@@ -19,10 +19,10 @@ import retrofit2.http.Query
 
 interface ApiService {
     @POST("user/create.php")
-    suspend fun registerUser(@Body userInfo: UserRegistration): Response<RegistrationResponse>
+    suspend fun registerUser(@Body userInfo: UserRegistration): Response<AuthResponse>
 
     @POST("user/login.php")
-    suspend fun loginUser(@Body userInfo: UserLogin): Response<LoginResponse>
+    suspend fun loginUser(@Body userInfo: UserLogin): Response<AuthResponse>
 
     @GET("user/get.php")
     suspend fun getUser(
