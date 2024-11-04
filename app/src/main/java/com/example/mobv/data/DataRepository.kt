@@ -12,6 +12,7 @@ import com.example.mobv.data.localDb.AppRoomDatabase
 import com.example.mobv.data.localDb.LocalCache
 import com.example.mobv.data.localDb.entities.UserEntity
 import com.example.mobv.data.services.StatusAndMessageResponse
+import com.example.mobv.data.services.UpdateUserLocationRequest
 import com.example.mobv.data.services.newPasswordRequest
 import com.example.mobv.data.services.resetPasswordRequest
 import com.google.gson.Gson
@@ -199,5 +200,45 @@ class DataRepository private constructor(private val service: ApiService, privat
             ex.printStackTrace()
         }
         return StatusAndMessageResponse("Error","Fatal error. Failed to reset password.")
+    }
+
+    suspend fun apiUpdateUserLocation(lat: Double, lon: Double, radius: Double): StatusAndMessageResponse {
+        try {
+            val response = service.updateUserLocation(UpdateUserLocationRequest(lat, lon, radius))
+
+            if (!response.isSuccessful) return StatusAndMessageResponse("Error", "Failed; HTTP Code: ${response.code()}")
+
+            val responseBody = response.body() ?: return StatusAndMessageResponse("Error", "Body is empty")
+
+            if (responseBody.success != "true") return StatusAndMessageResponse(responseBody.success, "Body is failure")
+
+            return StatusAndMessageResponse("success", "Location updated successfully")
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            return StatusAndMessageResponse("Error","Check internet connection. Failed to update location.")
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+        return StatusAndMessageResponse("Error","Fatal error. Failed to update location.")
+    }
+
+    suspend fun apiDeleteUserLocation(): StatusAndMessageResponse {
+        try {
+            val response = service.deleteUserLocation()
+
+            if (!response.isSuccessful) return StatusAndMessageResponse("Error", "Failed; HTTP Code: ${response.code()}")
+
+            val responseBody = response.body() ?: return StatusAndMessageResponse("Error", "Body is empty")
+
+            if (responseBody.success != "true") return StatusAndMessageResponse(responseBody.success, "Body is failure")
+
+            return StatusAndMessageResponse("success", "Location deleted successfully")
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            return StatusAndMessageResponse("Error","Check internet connection. Failed to delete location.")
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+        return StatusAndMessageResponse("Error","Fatal error. Failed to delete location.")
     }
 }

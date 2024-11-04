@@ -11,6 +11,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.HeaderMap
 import retrofit2.http.Headers
@@ -49,6 +50,12 @@ interface ApiService {
 
     @POST("user/reset.php")
     suspend fun resetPassword(@Body email: resetPasswordRequest): Response<StatusAndMessageResponse>
+
+    @POST("geofence/update.php")
+    suspend fun updateUserLocation(@Body location: UpdateUserLocationRequest): Response<SuccessResponse>
+
+    @DELETE("geofence/update.php")
+    suspend fun deleteUserLocation(): Response<SuccessResponse>
 
     companion object{
         fun create(context: Context): ApiService {

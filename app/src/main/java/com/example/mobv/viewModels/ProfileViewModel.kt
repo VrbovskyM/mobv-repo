@@ -20,6 +20,7 @@ class ProfileViewModel(private val dataRepository: DataRepository) : ViewModel()
     val user: LiveData<User?> get() = _user
 
     val changePasswordResult = MutableLiveData<Evento<StatusAndMessageResponse>>()
+    val deleteLocationResult = MutableLiveData<Evento<StatusAndMessageResponse>>()
     val oldPassword = MutableLiveData<String>()
     val newPassword = MutableLiveData<String>()
     val repeatNewPassword = MutableLiveData<String>()
@@ -51,7 +52,10 @@ class ProfileViewModel(private val dataRepository: DataRepository) : ViewModel()
         repeatNewPassword.postValue("")
     }
 
-    fun locationSharingMode(mode: SharingMode){
-        sharingMode.postValue(mode)
+    fun deleteUserLocation(){
+        viewModelScope.launch {
+            val result = dataRepository.apiDeleteUserLocation()
+            deleteLocationResult.postValue(Evento(result))
+        }
     }
 }

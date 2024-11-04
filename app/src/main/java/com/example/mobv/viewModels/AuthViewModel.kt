@@ -1,5 +1,6 @@
 package com.example.mobv.viewModels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -49,8 +50,12 @@ class AuthViewModel(private val dataRepository: DataRepository) : ViewModel() {
     }
     private suspend fun loadAndUpdateUserInPreference(userId: String): Boolean {
         val result = dataRepository.apiGetUser(userId)
+        val user = PreferenceData.getInstance().getUser()
+        Log.d("AuthViewModel", "User updated: $user")
         if (result.second != null) {
             val isUpdated = PreferenceData.getInstance().updateUser(result.second!!)
+            val user2 = PreferenceData.getInstance().getUser()
+            Log.d("AuthViewModel", "User updated: $user2")
             return isUpdated
         }
         return false

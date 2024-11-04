@@ -177,9 +177,11 @@ class ProfileFragment : Fragment() {
             PreferenceData.getInstance().updateScheduledTime(scheduledTime)
             profileViewModel.scheduledSharing.postValue(scheduledTime)
         }
+        if (mode == SharingMode.OFF){
+            profileViewModel.deleteUserLocation()
+        }
         PreferenceData.getInstance().putSharingMode(mode)
         profileViewModel.sharingMode.postValue(mode)
-
     }
 
     private fun initializeTimePickers(view: View) {

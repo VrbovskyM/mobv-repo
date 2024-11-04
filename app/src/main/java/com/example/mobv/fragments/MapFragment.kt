@@ -10,11 +10,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.mobv.MyApplication
 import com.example.mobv.R
+import com.example.mobv.data.DataRepository
 import com.example.mobv.databinding.FragmentLoginBinding
 import com.example.mobv.databinding.FragmentMapBinding
 import com.example.mobv.utils.Utils
+import com.example.mobv.viewModels.AuthViewModel
+import com.example.mobv.viewModels.MapViewModel
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
@@ -44,6 +49,7 @@ class MapFragment : Fragment() {
     private var lastLocation: Point? = null
     private lateinit var annotationManager: CircleAnnotationManager
 
+    private lateinit var mapViewModel: MapViewModel
 
     val requestPermissionLauncher =
         registerForActivityResult(
@@ -54,11 +60,16 @@ class MapFragment : Fragment() {
                 addLocationListeners()
             }
         }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        mapViewModel = ViewModelProvider(requireActivity(), object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return MapViewModel(DataRepository.getInstance(requireContext())) as T
+            }
+        })[MapViewModel::class.java]
+    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_map, container, false)
         val mapView = view.findViewById<MapView>(R.id.mapView)
@@ -135,9 +146,15 @@ class MapFragment : Fragment() {
 
     }
 
-    private val onIndicatorPositionChangedListener = OnIndicatorPositionChangedListener {
-        Log.d("MapFragment", "poloha je $it")
-        refreshLocation(it)
+    private val onIndicatorPositionChangedListener = OnIndicatorPositionChangedListener { point ->
+        Log.d("MapFragment", "poloha je $point")
+        refreshLocation(point)
+        sendLocationToDatabase(point.latitude(), point.longitude())
+    }
+
+    private fun sendLocationToDatabase(latitude: Any, longitude: Any) {
+        Log.d("MapFragment", "Sending location to database: Lat = $latitude, Lon = $longitude")
+        mapViewModel.updateLocation(latitude as Double, longitude as Double, 100.0)
     }
 
     private fun refreshLocation(point: Point) {
@@ -147,7 +164,6 @@ class MapFragment : Fragment() {
             mapBinding.mapView.getMapboxMap().pixelForCoordinate(point)
         lastLocation = point
         addMarker(point)
-
     }
 
     private fun addMarker(point: Point) {

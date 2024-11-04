@@ -61,11 +61,11 @@ class PreferenceData private constructor() {
             // Create new User object with updated fields
             val newUser = User(
                 id = currentUser.id,  // keep original ID
-                username = updatedUser.username,
-                email = updatedUser.email,
-                access = updatedUser.access,
-                refresh = updatedUser.refresh,
-                photo = updatedUser.photo
+                username = updatedUser.username.takeIf { it.isNotEmpty() } ?: currentUser.username,
+                email = updatedUser.email.takeIf { it.isNotEmpty() } ?: currentUser.email,
+                access = updatedUser.access.takeIf { it.isNotEmpty() } ?: currentUser.access,
+                refresh = updatedUser.refresh.takeIf { it.isNotEmpty() } ?: currentUser.refresh,
+                photo = updatedUser.photo.takeIf { it.isNotEmpty() } ?: currentUser.photo
             )
             putUser(newUser)
             true
@@ -96,6 +96,7 @@ class PreferenceData private constructor() {
         val jsonString = sharedPreferences.getString(scheduledSharingKey, null)
         return jsonString?.let { Gson().fromJson(it, ScheduledTime::class.java) }
     }
+
     // New method to update the scheduled time
     fun updateScheduledTime(newScheduledTime: ScheduledTime) {
         // Retrieve the current scheduled time

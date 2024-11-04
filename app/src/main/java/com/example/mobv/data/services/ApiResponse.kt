@@ -8,6 +8,8 @@ data class RefreshTokenResponse(val uid: String, val access: String, val refresh
 
 data class StatusAndMessageResponse(val status: String, val message: String)
 
+data class SuccessResponse(val success: String)
+
 data class GeofenceResponse(
     val me: GeofenceMeResponse,
     val list: List<GeofenceUserResponse>
