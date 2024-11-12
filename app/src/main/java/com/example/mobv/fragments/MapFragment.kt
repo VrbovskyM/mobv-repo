@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.mobv.MyApplication
 import com.example.mobv.R
 import com.example.mobv.data.DataRepository
+import com.example.mobv.data.models.SharingMode
 import com.example.mobv.databinding.FragmentLoginBinding
 import com.example.mobv.databinding.FragmentMapBinding
 import com.example.mobv.utils.Utils
@@ -86,7 +87,7 @@ class MapFragment : Fragment() {
         annotationManager = mapBinding.mapView.annotations.createCircleAnnotationManager()
 
         // Check if permissions are granted
-        val hasPermission = Utils.hasPermissions(requireContext())
+        val hasPermission = SharingMode.isSharingEnabled()
 
         // Handle map readiness based on permission status
         onMapReady(hasPermission)

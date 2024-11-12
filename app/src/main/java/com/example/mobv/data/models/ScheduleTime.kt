@@ -26,6 +26,7 @@ data class ScheduledTime(
             }
         }
     }
+
     // If start and end time equals, sharing is disabled
     fun isSameTime(): Boolean {
         return this.startHour == this.endHour

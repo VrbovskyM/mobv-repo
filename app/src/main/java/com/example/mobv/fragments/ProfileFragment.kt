@@ -1,12 +1,18 @@
 package com.example.mobv.fragments
 
 import android.Manifest
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
+import android.animation.ValueAnimator
 import android.app.Dialog
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.NumberPicker
 import android.widget.TextView
@@ -33,7 +39,7 @@ import com.example.mobv.viewModels.ProfileViewModel
  * Use the [ProfileFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     // ViewModels
     private lateinit var profileViewModel: ProfileViewModel
@@ -71,9 +77,6 @@ class ProfileFragment : Fragment() {
             }
         })[ProfileViewModel::class.java]
         authViewModel = ViewModelProvider(requireActivity()).get(AuthViewModel::class.java)
-    }
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -163,12 +166,16 @@ class ProfileFragment : Fragment() {
         if (mode == SharingMode.ON || mode == SharingMode.SCHEDULED){
             if (!Utils.hasPermissions(requireContext())){
                 requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                return
             }
             else
                 setSharingMode(mode)
+            //updateLocationIndicator(true)
         }
-        else
+        else {
             setSharingMode(SharingMode.OFF)
+            //updateLocationIndicator(false)
+        }
     }
 
     private fun setSharingMode(mode: SharingMode){
@@ -179,6 +186,7 @@ class ProfileFragment : Fragment() {
         }
         if (mode == SharingMode.OFF){
             profileViewModel.deleteUserLocation()
+
         }
         PreferenceData.getInstance().putSharingMode(mode)
         profileViewModel.sharingMode.postValue(mode)
@@ -217,12 +225,58 @@ class ProfileFragment : Fragment() {
         // Update the appropriate field based on which hour is being changed
         if (isStartHour) {
             scheduledTime.startHour = newVal
-            scheduledTime.endHour = scheduledTime.endHour ?: 17
+            scheduledTime.endHour = scheduledTime.endHour
         } else {
             scheduledTime.endHour = newVal
-            scheduledTime.startHour = scheduledTime.startHour ?: 9
+            scheduledTime.startHour = scheduledTime.startHour
         }
 
         PreferenceData.getInstance().updateScheduledTime(scheduledTime)
     }
+
+//    private fun updateLocationIndicator(isSharingEnabled: Boolean) {
+//        // Find the indicator view
+//        val indicator = view?.findViewById<View>(R.id.location_sharing_indicator)
+//
+//        // Ensure the indicator view is not null
+//        indicator?.let {
+//            // Log the current state for debugging
+//            Log.d("LocationIndicator", "Updating indicator. Sharing enabled: $isSharingEnabled")
+//
+//            // Set the appropriate drawable based on the sharing state
+//            if (isSharingEnabled) {
+//                // Log for debugging
+//                Log.d("LocationIndicator", "Setting background to 'on'")
+//                it.setBackgroundResource(R.drawable.indicator_on) // Set green drawable
+//
+//                // Create and start the pulsating animation
+//                ObjectAnimator.ofPropertyValuesHolder(
+//                    it,
+//                    PropertyValuesHolder.ofFloat("scaleX", 1f, 1.2f),
+//                    PropertyValuesHolder.ofFloat("scaleY", 1f, 1.2f)
+//                ).apply {
+//                    duration = 300
+//                    repeatCount = ValueAnimator.INFINITE
+//                    repeatMode = ValueAnimator.REVERSE
+//                    start() // Start the pulsating animation
+//                }
+//            } else {
+//                // Log for debugging
+//                Log.d("LocationIndicator", "Setting background to 'off'")
+//                it.setBackgroundResource(R.drawable.indicator_off) // Set grey drawable
+//
+//                val animator = it.tag as? ValueAnimator
+//                animator?.cancel() // Stop the animation
+//                it.clearAnimation() // Clear any animations from the view
+//            }
+//        } ?: run {
+//            Log.e("LocationIndicator", "Indicator view is null")
+//        }
+//    }
+
+
+
 }
+
+
+

@@ -19,16 +19,10 @@ import com.example.mobv.databinding.FragmentRegistrationBinding
 import com.example.mobv.viewModels.AuthViewModel
 import com.google.android.material.snackbar.Snackbar
 
-class RegistrationFragment : Fragment() {
+class RegistrationFragment : Fragment(R.layout.fragment_registration) {
 
     private lateinit var viewModel: AuthViewModel
     private var regBinding: FragmentRegistrationBinding? = null
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_registration, container, false)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

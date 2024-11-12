@@ -24,6 +24,8 @@ class AuthViewModel(private val dataRepository: DataRepository) : ViewModel() {
     val email = MutableLiveData<String>()
     val password = MutableLiveData<String>()
     val repeatPassword = MutableLiveData<String>()
+    val emailToReset = MutableLiveData<String>()
+
 
     fun registerUser() {
         viewModelScope.launch {
@@ -63,13 +65,14 @@ class AuthViewModel(private val dataRepository: DataRepository) : ViewModel() {
 
     fun logout() {
         viewModelScope.launch {
+            dataRepository.deleteUserItems()
             _authResult.postValue(Pair("Logging out", null))
         }
     }
 
     fun resetPassword() {
         viewModelScope.launch {
-            resetPasswordResult.postValue(Evento(dataRepository.apiResetPassword(email.value?:"")))
+            resetPasswordResult.postValue(Evento(dataRepository.apiResetPassword(emailToReset.value?:"")))
         }
     }
     private fun clearFormFields(){

@@ -21,7 +21,7 @@ import com.example.mobv.viewModels.AuthViewModel
  * Use the [IntroFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class IntroFragment : Fragment() {
+class IntroFragment : Fragment(R.layout.fragment_intro) {
 
     private lateinit var viewModel: AuthViewModel
     private var introBinding: FragmentIntroBinding? = null
@@ -35,12 +35,7 @@ class IntroFragment : Fragment() {
             }
         })[AuthViewModel::class.java]
     }
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_intro, container, false)
-    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

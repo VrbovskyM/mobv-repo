@@ -17,7 +17,7 @@ class LocalCache(private val dao: Dao) {
         return dao.getUserItem(uid)
     }
 
-    fun getUsers(): LiveData<List<UserEntity>?> = dao.getUsers()
+    suspend fun getUsers(): LiveData<List<UserEntity>?> = dao.getUsers()
 
     suspend fun deleteUserItems() {
         dao.deleteUserItems()

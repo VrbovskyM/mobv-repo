@@ -11,6 +11,7 @@ import android.content.Context
 import com.example.mobv.data.localDb.AppRoomDatabase
 import com.example.mobv.data.localDb.LocalCache
 import com.example.mobv.data.localDb.entities.UserEntity
+import com.example.mobv.data.models.SharingMode
 import com.example.mobv.data.services.StatusAndMessageResponse
 import com.example.mobv.data.services.UpdateUserLocationRequest
 import com.example.mobv.data.services.newPasswordRequest
@@ -121,6 +122,9 @@ class DataRepository private constructor(private val service: ApiService, privat
 
     suspend fun apiListGeofenceUsers(): String {
         try {
+            if (!SharingMode.isSharingEnabled()) {
+                return ""
+            }
             val response = service.listGeofence()
 
             if (response.isSuccessful) {
@@ -147,7 +151,7 @@ class DataRepository private constructor(private val service: ApiService, privat
         return "Fatal error. Failed to load user."
     }
 
-    fun getUsers() = cache.getUsers()
+    suspend fun getUsers() = cache.getUsers()
 
     suspend fun apiChangePassword(oldPassword: String, newPassword: String): StatusAndMessageResponse {
         if (oldPassword.isEmpty()) return StatusAndMessageResponse("Error","Old password cannot be empty")
@@ -241,4 +245,6 @@ class DataRepository private constructor(private val service: ApiService, privat
         }
         return StatusAndMessageResponse("Error","Fatal error. Failed to delete location.")
     }
+
+    suspend fun deleteUserItems() = cache.deleteUserItems()
 }

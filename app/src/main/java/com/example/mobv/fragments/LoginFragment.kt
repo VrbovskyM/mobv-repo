@@ -25,18 +25,12 @@ import com.google.android.material.snackbar.Snackbar
  * Use the [LoginFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LoginFragment : Fragment() {
+class LoginFragment : Fragment(R.layout.fragment_login) {
     private lateinit var viewModel: AuthViewModel
     private var binding: FragmentLoginBinding? = null
     private var dialogBinding: ForgotPasswordDialogBinding? = null  // Add this line
     private var resetPasswordDialog: Dialog? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_login, container, false)
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

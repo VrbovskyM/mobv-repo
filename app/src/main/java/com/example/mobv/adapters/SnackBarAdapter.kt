@@ -14,7 +14,10 @@ fun SnackBarAdapter(view: View, message: Any?) {
             message.getContentIfNotHandled()?.let { content ->
                 if (content is StatusAndMessageResponse) {
                     Snackbar.make(view, content.message, Snackbar.LENGTH_SHORT).show()
+                }else if (content is String){
+                    Snackbar.make(view, content, Snackbar.LENGTH_SHORT).show()
                 }
+
             }
         }
         is String -> {

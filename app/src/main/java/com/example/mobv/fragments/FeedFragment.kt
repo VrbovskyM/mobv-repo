@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobv.R
 import com.example.mobv.adapters.FeedAdapter
-import com.example.mobv.adapters.MyItem
-import com.example.mobv.customLayouts.BottomBarLayout
 import com.example.mobv.data.DataRepository
 import com.example.mobv.databinding.FragmentFeedBinding
 import com.example.mobv.viewModels.FeedViewModel
@@ -61,13 +59,13 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
             feedAdapter.updateItems(items ?: emptyList())
         }
 
-//        feedBinding.pullRefresh.setOnRefreshListener {
-//            feedViewModel.updateItems()
-//            }
-//
-//        feedViewModel.loading.observe(viewLifecycleOwner) {
-//            feedBinding.pullRefresh.isRefreshing = it
-//        }
+        feedBinding!!.swipeRefreshLayout.setOnRefreshListener {
+            feedViewModel.updateItems()
+            }
+
+        feedViewModel.loading.observe(viewLifecycleOwner) {
+            feedBinding!!.swipeRefreshLayout.isRefreshing = it
+        }
 
     }
 

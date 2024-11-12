@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.androidx.room.common)
     implementation(libs.androidx.databinding.common)
     implementation(libs.play.services.identity.credentials)
+    implementation(libs.androidx.swiperefreshlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
